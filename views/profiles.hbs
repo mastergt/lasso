@@ -1,0 +1,41 @@
+{{> header}}
+{{> navbar}}
+{{> sidebar}}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Профили ffmpeg:</h1>
+    </div>
+    <form action="/profiles/create" method="GET">
+        <button class="btn btn-success">Добавить поток</button>
+    </form>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Название</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each profileNames}}
+                <tr>
+                    <th scope="row">{{this}}</th>
+                    <td>
+                        <form action="/profiles/edit" class="d-inline">
+                            <input type="hidden" name="name" value="{{this}}">
+                            <button type="submit" class="btn btn-primary">Редактировать</button>
+                        </form>
+                        <form action="/profiles/delete/unconfirm" method="POST" class="d-inline">
+                            <input type="hidden" name="name" value="{{this}}">
+                            <button type="submit" class="btn btn-dark">Удалить</button>
+                        </form>
+                    </td>
+
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</main>
+{{> footer}}

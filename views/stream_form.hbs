@@ -1,0 +1,96 @@
+{{> header}}
+{{> navbar}}
+{{> sidebar}}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Потоки:</h1>
+
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                {{#if this.isCreate}}
+                <form action="/streams/create" method="POST">
+                    {{else}}
+                    <form action="/streams/edit" method="POST" class="d-inline">
+                        {{/if}}
+
+                        <div class="mb-3">
+                            <label for="numberId" class="form-label">Номер потока (уникальный)</label>
+                            {{#if this.isCreate}}
+                            <input type="number" name="number" class="form-control" id="numberId"
+                                aria-describedby="numberHelp" value="{{this.stream.number}}">
+                            {{else}}
+                            <input type="number" disabled name="numberD" class="form-control" id="numberIdD"
+                                aria-describedby="numberHelp" value="{{this.stream.number}}">
+                            <input type="hidden" name="number" class="form-control" id="numberId"
+                                aria-describedby="numberHelp" value="{{this.stream.number}}">
+                            {{/if}}
+                            <div id="numberHelp" class="form-text">Обычно - номер тв канала(потока).
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nameId" class="form-label">название потока</label>
+                            <input type="text" name="name" class="form-control" id="nameId" aria-describedby="nameHelp"
+                                value="{{this.stream.name}}">
+                            <div id="nameHelp" class="form-text">Обычно - название потока канала.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputId" class="form-label">URI входного потока</label>
+                            <input type="text" name="input" class="form-control" id="inputId"
+                                aria-describedby="inputHelp" value="{{this.stream.input}}">
+                            <div id="inputHelp" class="form-text">Что будет поступать ffmpeg на вход. HLS не рекомендую
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <select name="ffmpegProfile" class="form-select" aria-label="Default select example">
+                                {{#if this.isNotSelected}}
+                                <option selected disabled>Выбор ffmpeg профиля</option>
+                                {{#each profiles}}
+                                <option value="{{this}}">{{this}}</option>
+                                {{/each}}
+                                {{else}}
+                                <option disabled>Выбор ffmpeg профиля</option>
+                                {{#each profiles}}
+                                {{option this this ../stream.ffmpegProfile}}
+                                {{/each}}
+                                {{/if}}
+
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="outputId" class="form-label">URI выходного потока</label>
+                            <input type="text" name="output" class="form-control" id="outputId"
+                                value="{{this.stream.output}}">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                    </form>
+                    {{#if this.isCreate}}
+                    {{else}}
+                    <form class="d-inline" action="/streams/clone/start" method="POST">
+                        <input type="hidden" name="number" id="_numberId" value="{{this.stream.number}}">
+                        <input type="hidden" name="name" id="_nameId" value="{{this.stream.name}}">
+                        <input type="hidden" name="ffmpegProfile" id="_ffmpegProfile"
+                            value="{{this.stream.ffmpegProfile}}">
+                        <input type="hidden" name="input" id="_inputId" value="{{this.stream.input}}">
+                        <input type="hidden" name="output" id="_outputId" value="{{this.stream.output}}">
+                        <button type="submit" class="btn btn-success">Клонировать</button>
+                    </form>
+                    {{/if}}
+            </div>
+            <div class="col-4"></div>
+        </div>
+    </div>
+
+</main>
+{{> footer}}
+{{!--
+<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+<script>
+    Handlebars.registerHelper('loud2', function (aString) {
+        return aString.toUpperCase()
+    })
+</script> --}}

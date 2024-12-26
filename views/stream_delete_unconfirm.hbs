@@ -1,0 +1,40 @@
+{{> header}}
+{{> navbar}}
+{{> sidebar}}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="alert alert-danger" role="alert">
+                Точно удалить поток: <b>{{this.name}}</b>?
+            </div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col">
+                <form action="/streams/delete/confirm" method="POST">
+                    <input type="hidden" name="number" value="{{this.number}}">
+                    <input type="hidden" name="name" value="{{this.name}}">
+                    <button type="submit" class="btn btn-dark">Да</button>
+                </form>
+            </div>
+            <div class="col"></div>
+            <div class="col">
+                <form action="/">
+                    <button type="submit" class="btn btn-light">нет</button>
+                </form>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+</main>
+<div>
+
+</div>
+{{> footer}}

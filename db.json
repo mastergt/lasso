@@ -1,0 +1,74 @@
+{
+    "profiles": [
+        {
+            "name": "sd 264 cuda example",
+            "command": "ffmpeg",
+            "params": [
+                "-re",
+                "-y",
+                "-hide_banner",
+                "-hwaccel",
+                "cuda",
+                "-hwaccel_output_format",
+                "cuda",
+                "-i",
+                "{{input}}",
+                "-map",
+                "0:v:0",
+                "-map",
+                "0:a:0",
+                "-c:v",
+                "h264_nvenc",
+                "-preset",
+                "medium",
+                "-maxrate",
+                "3M",
+                "-bufsize",
+                "1M",
+                "-profile:v",
+                "high",
+                "-fflags",
+                "+genpts+igndts",
+                "-forced-idr",
+                "1",
+                "-b:v",
+                "2.5M",
+                "-c:a",
+                "aac",
+                "-b:a",
+                "128k",
+                "-r",
+                "25",
+                "-g",
+                "8",
+                "-keyint_min",
+                "13",
+                "-dts_delta_threshold",
+                "1000",
+                "-af",
+                "aresample=async=1000",
+                "-metadata",
+                "service_provider=pg19",
+                "-f",
+                "mpegts",
+                "{{output}}"
+            ]
+        }
+    ],
+    "streams": [
+        {
+            "number": "1",
+            "name": "Первый канал пример",
+            "input": "http://127.0.0.1:7001/iptv/orig/channel/1",
+            "ffmpegProfile": "sd 264 cuda example",
+            "output": "udp://233.231.0.1:1234?pkt_size=1316",
+            "isActive": false
+        }
+    ],
+    "users": [
+        {
+            "username": "admin",
+            "password": "admin"
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+# На какой порту будет работать приложение
+port=4000
+# писать ли лог в stdout?  да - 1, нет - 0.
+isLogOut=1
+# пароль
+jwtSecret=somecoolstrongpass

@@ -1,0 +1,50 @@
+{{> header}}
+{{> navbar}}
+{{> sidebar}}
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+
+    </div>
+    <ul id='messages'></ul>
+    <div class="container">
+        <div class="row">
+            <div class="alert alert-secondary" role="alert">
+                Запрос логов по потоку: <b>{{this.name}}</b>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col">
+                <button type="submit" id='stopButton' class="btn btn-danger">Остановить запрос логов</button>
+                <button type="submit" id='startButton' class="btn btn-success">Запустить запрос логов</button>
+            </div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+        </div>
+        <div class="row">
+            <div id="logs" class="window-fixed">
+            </div>
+        </div>
+
+
+    </div>
+</main>
+<div>
+
+</div>
+{{> footer}}
+<script src='/js/socket.io.js'></script>
+<script src='/js/jquery-3.7.1.min.js'></script>
+<script src='/js/streamlogs.js'></script>
+<style>
+    .window-fixed {
+        background-color: rgba(232, 242, 246, 0.619);
+        width: 90%;
+        height: 800px;
+        overflow: scroll;
+    }
+</style>

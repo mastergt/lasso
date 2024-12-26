@@ -1,0 +1,90 @@
+{{> header}}
+{{> navbar}}
+{{> sidebar}}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Потоки:</h1>
+
+    </div>
+    <form action="/streams/create" method="GET">
+        <input type="hidden" name="number" value="{{this.number}}">
+        <button class="btn btn-success">Добавить поток</button>
+    </form>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Номер</th>
+                    <th scope="col">Название</th>
+                    <th scope="col">Время старта</th>
+                    <th scope="col">Времени прошло</th>
+                    <th scope="col">кол-во рестартов</th>
+                    <th scope="col">id процесса ffmpeg</th>
+                    <th scope="col">ffmpeg профиль</th>
+                    <th scope="col">статус</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each streams}}
+                <tr>
+                    <th scope="row">{{this.number}}</th>
+                    <td>{{this.name}}</td>
+                    <td>{{this.ffmpeg.lastStartTimePretty}}</td>
+                    <td>{{this.ffmpeg.lastWorkTimePretty}}</td>
+                    <td>{{this.ffmpeg.restartCount}}</td>
+                    <td>{{this.ffmpeg.pid}}</td>
+                    <td>{{this.ffmpegProfile}}</td>
+
+                    {{#if this.ffmpeg.isRunning}}
+                    <td class="table-success">работает</td>
+                    {{else}}
+                    <td class="table-danger">не работает</td>
+                    {{/if}}
+                    {{#if this.isActive}}
+                    <td>
+                        <form action="/streams/stop" method="POST">
+                            <input type="hidden" name="number" value="{{this.number}}">
+                            <button class="btn btn-danger">стоп</button>
+                        </form>
+                    </td>
+                    {{else}}
+                    <td>
+                        <form action="/streams/start" method="POST">
+                            <input type="hidden" name="number" value="{{this.number}}">
+                            <button class="btn btn-success">старт</button>
+                        </form>
+                    </td>
+                    {{/if}}
+                    <td>
+                        <form action="/streams/logs" method="GET">
+                            <input type="hidden" name="number" value="{{this.number}}">
+                            <input type="hidden" name="name" value="{{this.name}}">
+                            <button type="submit" class="btn btn-secondary">Лог</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/streams/edit">
+                            <input type="hidden" name="number" value="{{number}}">
+                            <button type="submit" class="btn btn-primary">Редактировать</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/streams/delete/unconfirm" method="POST">
+                            <input type="hidden" name="number" value="{{this.number}}">
+                            <input type="hidden" name="name" value="{{this.name}}">
+                            <button type="submit" class="btn btn-dark">Удалить</button>
+                        </form>
+                    </td>
+
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</main>
+{{> footer}}

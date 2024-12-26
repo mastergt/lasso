@@ -1,0 +1,41 @@
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Потоки:</h1>
+
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Номер</th>
+                    <th scope="col">Название</th>
+                    <th scope="col">вход(input)</th>
+                    <th scope="col">Выход(output)</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {{#each streams}}
+                <tr>
+                    <th scope="row">{{this.number}}</th>
+                    <td>{{this.name}}</td>
+                    <td>{{this.input}}</td>
+                    <td>{{this.output}}</td>
+                    <td>
+                        <form action="/streams">
+                            <input type="hidden" name="number" value="{{this.number}}">
+                            <button type="submit" class="btn btn-primary">Редактировать</button>
+                        </form>
+                    </td>
+                    <td><button class="btn btn-success">старт</button></td>
+                    <td><button class="btn btn-danger">стоп</button></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</main>
